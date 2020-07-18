@@ -1,0 +1,108 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ */
+
+import React from 'react';
+import clsx from 'clsx';
+import Layout from '@theme/Layout';
+import Link from '@docusaurus/Link';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import styles from './styles.module.css';
+
+const aboutMe = [
+  registerContent('Tomohiro Tanaka (Tom)', '/img/logo.png',""),
+  registerContent('', '', "I'm 600 years old like 'Master Yoda', and like coffee related technology and getting on a plane.")
+
+]
+
+
+const features = [
+  registerContent(
+    'My own wiki', '/img/broadcast_feature.png',
+    "This is my own wiki that helps me for the future. It's super important to share knowledge inside my brain."
+  ),
+  registerContent(
+    'Tomohiro Tanaka (Tom)', '/img/tomtan_selfie.png',
+    "I'm about 600 years old like 'Master Yoda', and like coffee related technology and getting on a plane."
+  ),
+  registerContent(
+    'No Coffee, No Life!', '/img/coffee_feature.png',
+    "Drinking coffee is my life, and helps my BigData engineering. That's why I need coffee."
+  )
+];
+
+
+
+function registerContent(title, imageUrl, description) {
+  /*
+   * This function returns page contents based on columns.
+   * params:
+   *  title: The title of a content
+   *  imageUrl: Image location for a content such as `/img/logo.png`.
+   *  description: The description of content
+  */
+  return({
+    title: <>{title}</>,
+    imageUrl: `${imageUrl}`,
+    description:(<>{description}</>)
+  })
+}
+
+// Show contents
+function Feature({imageUrl, title, description}) {
+  const imgUrl = useBaseUrl(imageUrl);
+  return (
+    <div className={clsx('col col--4', styles.feature)}>
+      {imgUrl && (
+        <div className="text--center">
+          <img className={styles.featureImage} src={imgUrl} alt={title} />
+        </div>
+      )}
+      <h2><center>{title}</center></h2>
+      <p><center>{description}</center></p>
+    </div>
+  );
+}
+
+function Home() {
+  const context = useDocusaurusContext();
+  const {siteConfig = {}} = context;
+  return (
+    <Layout
+      title={`Welcome to ${siteConfig.title}!`}
+      description="Description will go into a meta tag in <head />">
+      <header className={clsx('hero hero--primary', styles.heroBanner)}>
+        <div className="container">
+          <h1 className="hero__title">{siteConfig.title}</h1>
+          <p className="hero__subtitle">{siteConfig.tagline}</p>
+        </div>
+      </header>
+      <main>
+        {features && features.length > 0 && (
+          <section className={styles.features}>
+            <div className="container">
+              <div className="row">
+                {features.map(({title, imageUrl, description}) => (
+                  <Feature
+                    key={title}
+                    title={title}
+                    imageUrl={imageUrl}
+                    description={description}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+      </main>
+    </Layout>
+  );
+}
+
+export default Home;
