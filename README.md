@@ -1,5 +1,7 @@
 # Tomtongue.com
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/33f57cc0-096d-4d2f-b9f5-2104afa26ecf/deploy-status)](https://app.netlify.com/sites/tomtongue/deploys)
+
 *This website is based on [Docusaurus - v2.0.0-alpha.58](https://v2.docusaurus.io/versions).*
 
 ## Current Architecture
