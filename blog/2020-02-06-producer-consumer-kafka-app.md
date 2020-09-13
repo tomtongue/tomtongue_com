@@ -1,5 +1,4 @@
 ---
-id: producer-consumer-kafka-app
 title: Create Producer/Consumer Application for Kafka
 author: Tomohiro TANAKA
 authorURL: https://github.com/tomtongue

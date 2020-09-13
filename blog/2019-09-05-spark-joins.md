@@ -1,5 +1,4 @@
 ---
-id: spark-join
 title: Join operations in Spark
 author: Tomohiro TANAKA
 authorURL: https://github.com/tomtongue

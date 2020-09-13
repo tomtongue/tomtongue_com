@@ -25,6 +25,11 @@
   --ifm-code-font-size: 95%;
 }
 
+/* Toggle color */
+html[data-theme='light'] div.react-toggle-track {
+  background-color: #49D863;
+}
+
 .docusaurus-highlight-code-line {
   background-color: rgb(72, 77, 91);
   display: block;
@@ -32,11 +37,16 @@
   padding: 0 var(--ifm-pre-padding);
 }
 
-.navbar {
-  /* background-color: rgb(222, 233, 244, 0.8); */
+/* Navbar-background color */
+html[data-theme='light'] .navbar {
   background-color: rgba(252, 253, 254, 0.8);
 }
 
+html[data-theme='dark'] .navbar {
+  background-color: rgba(25, 26, 27, 0.8);
+}
+
+/* Hero header */
 header.hero {
   background: linear-gradient(to bottom right, #2580F3 30%, #1263E8 100%);
 }

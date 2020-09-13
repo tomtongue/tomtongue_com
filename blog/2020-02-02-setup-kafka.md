@@ -1,5 +1,4 @@
 ---
-id: setup-kafka
 title: Setup Apache Kafka - Confluent ver.
 author: Tomohiro TANAKA
 authorURL: https://github.com/tomtongue

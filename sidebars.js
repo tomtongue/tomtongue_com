@@ -8,8 +8,10 @@
  */
 
 module.exports = {
-  apache_arrow_src: {
-    'What is Apache Arrow?': [],
+  apache_arrow_internals: {
+    'What is Apache Arrow?': [
+      'apache_arrow_internals/0-intro'
+    ],
   },
   apache_spark_src: {
     'What is Apache Spark?': [],

@@ -1,5 +1,4 @@
 ---
-id: monit-spark-w-influxdb-grafana
 title: 'Monitoring Spark on EMR with InfluxDB and Grafana'
 author: Tomohiro TANAKA
 authorURL: https://github.com/tomtongue
