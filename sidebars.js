@@ -13,8 +13,9 @@ module.exports = {
       'apache_arrow_internals/0-intro'
     ],
   },
-  apache_spark_src: {
-    'What is Apache Spark?': [],
-  },
-  programming_scala: {}
+  building_managing_clusters: {
+    'Building & Managing Clusters': [
+      'building_managing_clusters/0-intro'
+    ],
+  }
 };
