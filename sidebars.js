@@ -13,9 +13,9 @@ module.exports = {
       'apache_arrow_internals/0-intro'
     ],
   },
-  building_managing_clusters: {
-    'Building & Managing Clusters': [
-      'building_managing_clusters/0-intro'
+  building_cluster_journey: {
+    'Building Cluster journey': [
+      'building_cluster_journey/0-intro'
     ],
   }
 };
