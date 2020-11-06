@@ -11,12 +11,12 @@ This document is still under construction.
 ## Condition
 *Note that [Apache Hadoop 3.2.1](https://hadoop.apache.org/release/3.2.1.html) is used, which followed the Hadoop version of [emr-6.1.0](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-release-6x.html#emr-610-release)*
 
-In this section, we skipped the following configuration:
+In this section, we skip the following configuration:
 * BIOS
 * RAID controller
 * OS/Filesytem (partially updated, described later)
 
-Before starting building a hadoop cluster, we need to launch an instance (we also skipped the specific steps to run the instance). Please note that you need an additional storage as follows. This storage is going to be used for "data storage".
+Before starting building a hadoop cluster, we need to launch an instance (we also skip the specific steps to run the instance). Please note that you need an additional storage as follows. This storage is going to be used for "data storage".
 
 [image]
 
