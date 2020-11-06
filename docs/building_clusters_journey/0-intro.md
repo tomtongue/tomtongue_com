@@ -1,6 +1,6 @@
 ---
 id: 0-intro
-title: Building Cluster Journey
+title: Building Clusters Journey
 sidebar_label: Introduction
 ---
 
@@ -18,7 +18,7 @@ This doc is about how we build "BigData" related clusters such as Hadoop, Spark,
 Note that we're using Apache licensed software for these projects except for Presto.
 
 ## Contents (& Progress)
-1. Hadoop 3 (Currently working)
+1. Hadoop 3 **<= Currently working from 6th of Nov. in 2020**
 2. Spark cluster
     1. Spark on Standalone
     2. Spark on Hadoop/YARN

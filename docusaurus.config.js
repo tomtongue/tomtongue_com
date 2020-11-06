@@ -12,7 +12,6 @@ module.exports = {
     tagline: '👨🏻‍💻Need More Caffein👩🏻‍💻',
     url: 'https://tomtongue.com',
     baseUrl: '/',
-    onBrokenLinks: 'throw',
     favicon: 'img/favicon.ico',
     organizationName: 'tomtongue', // Usually your GitHub org/user name.
     projectName: 'tomtongue_com', // Usually your repo name.
@@ -29,6 +28,7 @@ module.exports = {
           src: 'img/logo.png',
         },
         items: [
+          {to: 'docs/building_clusters_journey/0-intro', label: 'Building Clusters Journey', position: 'right'},
           {to: 'blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/tomtongue/tomtongue_com',
@@ -49,32 +49,22 @@ module.exports = {
         links: [
           {
             title: 'Contents',
-            items: [],
+            items: [
+              {label: 'Building Clusters Journey', to: 'docs/building_clusters_journey/0-intro'}
+            ],
           },
           {
             title: 'Blog',
             items: [
-              {
-                label: 'Blog posts',
-                to: '/blog',
-              },
-              {
-                label: 'Tags',
-                to: '/blog/tags',
-              }
+              {label: 'Blog posts', to: '/blog'},
+              {label: 'Tags', to: '/blog/tags'}
             ],
           },
           {
             title: 'About Me',
             items: [
-              {
-                label: 'GitHub - tomtongue',
-                to: 'https://github.com/tomtongue',
-              },
-              {
-                label: 'LinkedIn',
-                to: 'https://www.linkedin.com/in/tomohiro-tanaka-bb186039/',
-              },
+              {label: 'GitHub - tomtongue', to: 'https://github.com/tomtongue'},
+              {label: 'LinkedIn', to: 'https://www.linkedin.com/in/tomohiro-tanaka-bb186039/'},
             ],
           }
         ],
