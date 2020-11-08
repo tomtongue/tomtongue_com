@@ -17,6 +17,7 @@ module.exports = {
     projectName: 'tomtongue_com', // Usually your repo name.
     onBrokenLinks: 'warn',
     themeConfig: {
+      hideableSidebar: true,
       prism: {
         additionalLanguages: ['java', 'scala', 'swift', 'rust', 'ruby', 'python'],
       },
