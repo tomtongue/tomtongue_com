@@ -18,7 +18,7 @@ In this section, we skip the following configuration:
 
 Before starting building a hadoop cluster, we need to launch an instance (we also skip the specific steps to run the instance). Please note that you need an additional storage as follows. This storage is going to be used for "data storage".
 
-[image]
+![](/docs/building_clusters_journey/1-hadoop_1.png)
 
 ## Overview 
 We'll do following steps in this section:
@@ -69,7 +69,7 @@ clush 1.8.3
 ```
 
 ## 2. Installing `clush` command
-以下の内容で`/etc/clustershell/groups`を設定する (今回は簡略化のためにデータ用NWと管理用NWに同じものを利用している。本来は分けた方が良い)。
+Set node information to `/etc/clustershell/groups` (in this case, we're using the same network for the data as that for admin. If possible, it's better to separate them).
 
 ```
 [ec2-user@ip-172-31-27-219 ~]$ cat /etc/clustershell/groups
@@ -79,21 +79,14 @@ nn: ip-172-31-16-27.ec2.internal
 dn: ip-172-31-29-73.ec2.internal,ip-172-31-17-244.ec2.internal
 ```
 
-(e.g) ClientNodeのhostname:
-
-```
-[ec2-user@ip-172-31-27-219 etc]$ cat /etc/hostname
-ip-172-31-27-219.ec2.internal
-```
-
-各Nodeのhostname:
+The hostnames of each node (in this doc):
 * ClientNode: `ip-172-31-27-219.ec2.internal`
 * MasterNode: `ip-172-31-16-27.ec2.internal`
 * WorkerNode * 2:
    * 1: `ip-172-31-29-73.ec2.internal`
    * 2: `ip-172-31-17-244.ec2.internal`
 
-`clush`経由で他のNodeにログインできることを確認する (なおClientNodeにSSH経由でログインする際に`-A` optionを忘れないようにする)。`-A`をつけた場合でも`Host key verification failed.`で`clush`コマンドの実行に失敗したら[Failed to access with `clush` with the error: `Host key verification failed.`](#failed-to-access-with-clush-with-the-error-host-key-verification-failed)を参照
+After the group configuration, confirm if you can log in to each node with `clush`. Note to remember using `-A` option if you log into ClientNode via ssh. Even if you add `-A` option and you have `Host key verification failed.` error, refer to [Failed to access with `clush` with the error: `Host key verification failed.`](#failed-to-access-with-clush-with-the-error-host-key-verification-failed).
 
 ```
 ➜  .ssh ssh -i use1-multi.pem -A ec2-user@xxx.xxx.xxx.xxx
@@ -114,9 +107,9 @@ ip-172-31-29-73.ec2.internal: ip-172-31-29-73.ec2.internal
 
 ## 3. OS related configuration (for ALL nodes)
 上記ログインを確認した後に、以下のパラメータを設定する (今回は全Node同じ設定としている)
-* [`vm.swappiness`](https://ja.wikipedia.org/wiki/Swappiness) (disabled by default)
+* `vm.swappiness` (disabled by default)
 * [FD](https://wa3.i-3-i.info/word14383.html)のsoftlimit, hardlimit
-* [Transparent Hugepages](https://lwn.net/Articles/423584/)の無効化
+* Disabling Transparent Hugepages (THP)
 
 以下Default (変更前)の設定
 
@@ -258,4 +251,40 @@ tph_defrag: always defer defer+madvise madvise [never], tph_enabled: always madv
 ip-172-31-16-27.ec2.internal: tph_defrag: always defer defer+madvise madvise [never], tph_enabled: always madvise [never]
 ip-172-31-17-244.ec2.internal: tph_defrag: always defer defer+madvise madvise [never], tph_enabled: always madvise [never]
 ip-172-31-29-73.ec2.internal: tph_defrag: always defer defer+madvise madvise [never], tph_enabled: always madvise [never]
+```
+
+## Troubleshooting
+### Failed to access with `clush` with the error: `Host key verification failed.`
+まずはClientNodeに`ssh -A`でログインし、そのままprivateDNS経由で、別Nodeにアクセスできるか確認する。ここでログインできない場合は、おそらくlocalでのsshKeyAgent転送設定が`Yes`になっていないので、以下の通り`.ssh/config`に追加する。
+
+```
+# .ssh/config
+host *
+        UseKeychain yes
+        AddKeysToAgent yes
+```
+
+If you still have the error and fail to login, try to access to other nodes directly, not using `clush`.
+
+```
+[ec2-user@ip-172-31-27-219 ~]$ ssh ec2-user@ip-172-31-16-27.ec2.internal
+...
+Warning: Permanently added 'ip-172-31-16-27.ec2.internal,172.31.16.27' (ECDSA) to the list of known hosts.
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+[ec2-user@ip-172-31-16-27 ~]$ 
+```
+
+Then run the following command. If you have accessed the node, the `clush` command will be successful such as `ip-172-31-16-27.ec2.internal` (if you haven't log in yet, it still fail such as `ip-172-31-17-244.ec2.internal` and `ip-172-31-29-73.ec2.internal`).
+
+```
+[ec2-user@ip-172-31-27-219 ~]$ clush -g all -L hostname
+ip-172-31-17-244.ec2.internal: Host key verification failed.
+ip-172-31-29-73.ec2.internal: Host key verification failed.
+ip-172-31-16-27.ec2.internal: ip-172-31-16-27.ec2.internal
+clush: ip-172-31-17-244.ec2.internal,ip-172-31-29-73.ec2.internal (2): exited with exit code 255
 ```
