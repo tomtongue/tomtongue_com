@@ -18,7 +18,7 @@ We'll do following steps in this section:
 6. Creating the HDFS directory & Install Hadoop3
 
 
-### 2-1. Installing Java (OpenJDK, Java8)
+## 1. Installing Java (OpenJDK, Java8)
 
 ```
 [ec2-user@ip-172-31-27-219 ~]$ sudo yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
@@ -34,7 +34,7 @@ OpenJDK 64-Bit Server VM (build 25.265-b01, mixed mode)
 
 
 
-### 2-2. Creating a group and adding user for running Hadoop
+### 2. Creating a group and adding user for running Hadoop
 以下のように`hadoop` groupとそれに属するuserを作成する (誤って別のgroup作成してしまった場合は`sudo groupdel <wrong_user>`で削除)。なお全NodeでUIDとGIDを一致させる必要があるので注意する。
 
 ```
@@ -70,7 +70,7 @@ ip-172-31-16-27.ec2.internal: Changing password for user tomtan.
 ip-172-31-16-27.ec2.internal: passwd: all authentication tokens updated successfully.
 ```
 
-### 2-3. Configuration of environmental varaibles
+## 3. Configuration of environmental varaibles
 Add the following configuration to `.bash_profile` on the ClientNode:
 
 ```
@@ -146,7 +146,7 @@ ip-172-31-29-73.ec2.internal: -rw-r--r-- 1 tomtan hadoop 1024 Nov  2 02:04 /home
 
 これで環境設定は完了。
 
-### 2-4. Formatting disks for WorkerNode
+## 4. Formatting disks for WorkerNode
 
 
 EBSの場合は以下の通り、Partition Tableが未設定の状態で表示される。
@@ -240,7 +240,7 @@ ip-172-31-29-73.ec2.internal:  1      1049kB  34.4GB  34.4GB  xfs          prima
 ip-172-31-29-73.ec2.internal:
 ```
 
-### 2-5. `/etc/fstab` configuration for automatic-mount of `/dev/sdb1`
+## 5. `/etc/fstab` configuration for automatic-mount of `/dev/sdb1`
 WorkerNodeのOS起動時に`/dev/sdb1`が自動的に`/data`にmountされるよう`/etc/fstab`ファイルを記述する (`sudo`で書き込んでいるが、`hdfs` owner/`hadoop` groupに権限を変更する)。
 
 ```
@@ -271,7 +271,7 @@ ip-172-31-17-244.ec2.internal: /dev/nvme1n1p1 xfs        35G   69M   35G   1% /d
 ip-172-31-29-73.ec2.internal: /dev/nvme1n1p1 xfs        35G   69M   35G   1% /data
 ```
 
-### 2-6. Creating the HDFS directory & Install Hadoop3
+## 6. Creating the HDFS directory & Install Hadoop3
 Master/WorkerNodeに`/data/hadoop/hdfs` dirを作成し、ownerを`hdfs`, groupを`hadoop`に変更し、`775`に権限を変更する。
 
 
