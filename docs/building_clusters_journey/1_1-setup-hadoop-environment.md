@@ -122,7 +122,7 @@ ip-172-31-29-73.ec2.internal: ip-172-31-29-73.ec2.internal
 4096
 ```
 
-Following configuration are skipped:
+Following configurations are skipped:
 * Firewall
 * SELinux
 * Time-sync -> DefaultのAmazon Time Sync Serviceを利用している (ref: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html)

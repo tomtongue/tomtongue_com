@@ -34,3 +34,6 @@ Here's the detail which you need to prepare when you build a cluster:
     * us-east-1
     * AmazonLinux2 (AMI ID: )
 * `clush` command
+
+## Reference
+* https://book.impress.co.jp/books/1116101090
