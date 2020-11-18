@@ -190,7 +190,14 @@ df_rep.write.format("json").partitionBy('review_date').save(OUTPUT)
 Then, run the code with `spark-submit` in `cluster` mode. When executing `spark-submit`, don't forget to pass `spark.executor.extraClassPath` arguments and jars to the command.
 
 ```
-$ nohup spark-submit --master yarn --deploy-mode cluster --jars 'metrics-influxdb.jar,spark-influx-sink.jar' --conf 'spark.driver.extraClassPath=spark-influx-sink.jar:metrics-influxdb.jar' --conf 'spark.executor.extraClassPath=spark-influx-sink.jar:metrics-influxdb.jar' --conf 'spark.sql.shuffle.partitions=xxx' partition_by.py >> app.log &
+$ nohup spark-submit \
+--master yarn \
+--deploy-mode cluster \
+--jars 'metrics-influxdb.jar,spark-influx-sink.jar' 
+--conf 'spark.driver.extraClassPath=spark-influx-sink.jar:metrics-influxdb.jar' \
+--conf 'spark.executor.extraClassPath=spark-influx-sink.jar:metrics-influxdb.jar' \
+--conf 'spark.sql.shuffle.partitions=xxx' \
+partition_by.py >> app.log &
 ```
 
 ### 4-2. Query for InfluxDB and Monitoring Spark App
