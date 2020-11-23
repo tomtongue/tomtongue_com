@@ -20,7 +20,8 @@ module.exports = {
     '1. Hadoop 3 Cluster': [
       'building_clusters_journey/1_1-setup-hadoop-environment',
       'building_clusters_journey/1_2-installing-hadoop',
-      // 'building_clusters_journey/1_3-running-hdfs-and-yarn'
+      'building_clusters_journey/1_3-setup-hadoop-configuration-files',
+      'building_clusters_journey/1_4-running-hadoop-cluster'
     ],
   }
 };
