@@ -5,6 +5,10 @@ sidebar_label: '1-3. Setup Hadoop Configuration files'
 ---
 
 
+:::caution
+This document is still under construction. 
+:::
+
 ```
 [tomtan@ip-172-31-27-219 hadoop]$ pwd
 /opt/hadoop-3.2.1/etc/hadoop
