@@ -76,7 +76,7 @@ function Home() {
   return (
     <Layout
       title={`Welcome to ${siteConfig.title}!`}
-      description="Description will go into a meta tag in <head />">
+      description="Expanding tomtan's knowledge about Apache Spark, Apache Kafka and related projects, and loving Coffee!<head />">
       <header className={clsx('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <h1 className="hero__title">{siteConfig.title}</h1>
