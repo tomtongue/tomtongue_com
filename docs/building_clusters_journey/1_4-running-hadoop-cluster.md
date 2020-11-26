@@ -288,3 +288,33 @@ Estimated value of Pi is 3.14160000000000000000
 ```
 
 You've done the cluster configuration successfully! Using this cluster, we'll deploy yarn-based cluster such as Spark, Hive etc from the next chapter.
+
+## 3. (Additional) Stopping the cluster
+When you stop the cluster, you follow the below steps.
+
+1. HDFS: Master -> Worker
+2. YARN: Worker -> Master
+3. History server
+
+Speicifically, you run the following commands.
+
+```
+$ clush -g nn ". ~/.bash_profile; hdfs --daemon stop namenode"
+$ clush -g dn ". ~/.bash_profile; hdfs --daemon stop datanode"
+$ clush -g dn ". ~/.bash_profile; yarn --daemon stopnodemanager"
+$ clush -g nn ". ~/.bash_profile; yarn --daemon stop resourcemanager"
+$ clush -g nn ". ~/.bash_profile; mapred --daemon stop historyserver"
+$ clush -g all jps // => Check whether there are the running processes
+```
+
+If you have a secondary NameNode, 
+
+1. Stop DataNode
+2. Stop the secondary NameNode
+
+And, if you have HA cluster using ZooKeeper, 
+
+1. Stop DataNode
+2. Stop the secondary NameNode
+3. Stop the quorum jornal node
+4. Stop ZooKeeper service
