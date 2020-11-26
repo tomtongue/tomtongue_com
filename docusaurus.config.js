@@ -13,8 +13,11 @@ module.exports = {
     url: 'https://tomtongue.com',
     baseUrl: '/',
     favicon: 'img/favicon.ico',
-    organizationName: 'tomtongue', // Usually your GitHub org/user name.
+    organizationName: 'tomtan', // Usually your GitHub org/user name.
     projectName: 'tomtongue_com', // Usually your repo name.
+    customFields: {
+      description: 'Expanding tomtan\'s knowledge about Apache Spark, Apache Kafka and related projects, and loving Coffee!'
+    },
     onBrokenLinks: 'warn',
     themeConfig: {
       hideableSidebar: true,
@@ -23,10 +26,10 @@ module.exports = {
       },
       navbar: {
         hideOnScroll: true,
-        title: 'Tomtongue',
+        title: 'tomtongue.com',
         logo: {
-          alt: 'tomtongue',
-          src: 'img/logo.png',
+          alt: 'tomtan',
+          src: 'img/tomtan_selfie.png',
         },
         items: [
           {to: 'docs/building_clusters_journey/0-intro', label: 'Building Clusters Journey', position: 'right'},
@@ -70,7 +73,7 @@ module.exports = {
           }
         ],
         // Please do not remove the credits, help to publicize Docusaurus :)
-        copyright: `Copyright © ${new Date().getFullYear()} tomtonguecom`,
+        copyright: `Copyright © ${new Date().getFullYear()} tomtan. Built with Docusaurus.`,
       },
     },
     presets: [
