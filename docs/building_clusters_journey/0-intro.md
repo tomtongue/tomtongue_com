@@ -32,8 +32,9 @@ Note that we're using Apache licensed software for these projects except for Pre
 Here's the detail which you need to prepare when you build a cluster:
 * Amazon EC2 instances
     * us-east-1
-    * AmazonLinux2 (AMI ID: )
-* `clush` command
+    * AmazonLinux2 (AMI ID: `ami-0947d2ba12ee1ff75`)
+    * Instance type: m5.xlarge
+* `clush` command - version: `clush 1.8.3`
 
 ## Reference
 * https://book.impress.co.jp/books/1116101090
