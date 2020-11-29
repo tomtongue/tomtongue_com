@@ -164,7 +164,7 @@ Last Block Report: Sun Nov 29 01:27:22 UTC 2020
 Num of Blocks: 0
 ```
 
-And, you can check the permisson for `/tmp` on HDFS. This directory is used by YARN applications. To check this easily, you move to MasterNode.
+And, you can check the permisson for `/tmp` on HDFS. This directory is used by YARN applications. You can do this from the client node, not only from Master node.
 
 ```
 [root@ip-172-31-27-219 ~]# hdfs dfs -chmod -R 1777 /tmp
@@ -173,7 +173,7 @@ Found 1 items
 drwxrwxrwt   - root supergroup          0 2020-11-29 01:29 /tmp
 ```
 
-Additionally, you can check the space of HDFS on MasterNode.
+Additionally, you can check the space of HDFS from the cleit node.
 
 ```
 [root@ip-172-31-27-219 ~]# hdfs dfs -df -h
@@ -181,7 +181,7 @@ Filesystem                                  Size  Used  Available  Use%
 hdfs://ip-172-31-16-27.ec2.internal:9000  64.0 G  16 K     63.8 G    0%
 ```
 
-Finally, let's test if you can copy a file on HDFS on MasterNode.
+Finally, let's test if you can copy a file on HDFS.
 
 ```
 [root@ip-172-31-27-219 ~]# dd if=/dev/zero of=~/file01 bs=1024k count=10
@@ -202,7 +202,7 @@ Filesystem                                  Size    Used  Available  Use%
 hdfs://ip-172-31-16-27.ec2.internal:9000  64.0 G  20.2 M     63.8 G    0%
 ```
 
-Of course you can access HDFS from the MasterNode as follows:
+Of course you can access HDFS from the client node as follows:
 
 ```
 [root@ip-172-31-16-27 ~]# source /home/tomtan/.bash_profile
