@@ -24,22 +24,23 @@ const aboutMe = [
 
 const features = [
   registerContent(
-    'My own wiki', '/img/broadcast_feature.png',
+    'Building Clusters Journey', '/docs/building_clusters_journey/0-intro',
+    '/img/cluster_journey.png',
+    "Showing how we build clusters which are related to BigData projects such as Apache Hadoop/Spark/Kafka/Hive and Presto."
+  ),
+  registerContent(
+    'Tomohiro Tanaka (Tom)', null, '/img/tomtan_selfie.png',
+    "Working as a cloud coffee engineer and having interests in BigData related projects. Just a Coffee Lover."
+  ),
+  registerContent(
+    'My own wiki', null, '/img/broadcast_feature.png',
     "This is my own wiki that helps me for the future. It's super important to share knowledge inside my brain."
   ),
-  registerContent(
-    'Tomohiro Tanaka (Tom)', '/img/tomtan_selfie.png',
-    "I'm about 600 years old like 'Master Yoda', and like coffee related technology and getting on a plane."
-  ),
-  registerContent(
-    'No Coffee, No Life!', '/img/coffee_feature.png',
-    "Drinking coffee is my life, and helps my BigData engineering. That's why I need coffee."
-  )
 ];
 
 
 
-function registerContent(title, imageUrl, description) {
+function registerContent(title, pageUrl, imageUrl, description) {
   /*
    * This function returns page contents based on columns.
    * params:
@@ -47,8 +48,9 @@ function registerContent(title, imageUrl, description) {
    *  imageUrl: Image location for a content such as `/img/logo.png`.
    *  description: The description of content
   */
+  var pageTitle = pageUrl ? <><a href={pageUrl}>{title}</a></> : <>{title}</>
   return({
-    title: <>{title}</>,
+    title: pageTitle,
     imageUrl: `${imageUrl}`,
     description:(<>{description}</>)
   })

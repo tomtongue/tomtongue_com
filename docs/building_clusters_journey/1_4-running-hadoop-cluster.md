@@ -4,7 +4,7 @@ title: '1-4. Running Hadoop Cluster'
 sidebar_label: '1-4. Running Hadoop Cluster'
 ---
 
-## Running HDFS related processes and YARN
+## 1. Running HDFS related processes and YARN
 As the last step, we start HDFS, YARN and JobHistoryServer processes. In addition to these operations, we'll try running a YARN application and look into how to stop each process.
 
 1. Formatting HDFS on MasterNode
