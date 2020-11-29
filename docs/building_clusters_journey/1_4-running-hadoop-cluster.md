@@ -4,12 +4,8 @@ title: '1-4. Running Hadoop Cluster'
 sidebar_label: '1-4. Running Hadoop Cluster'
 ---
 
-:::caution
-This document is still under construction. 
-:::
-
-## 1. Running HDFS related processes and YARN
-In this section, we'll do as follows:
+## Running HDFS related processes and YARN
+As the last step, we start HDFS, YARN and JobHistoryServer processes. In addition to these operations, we'll try running a YARN application and look into how to stop each process.
 
 1. Formatting HDFS on MasterNode
 2. Launching NameNode & DataNode services
@@ -21,11 +17,11 @@ We format HDFS with `hdfs` command on MasterNode as following steps (If you skip
 
 ```
 // 1. Check if `hdfs` command works on MasterNode
-[tomtan@ip-172-31-27-219 ~]$ clush -g nn ". $HOME/.bash_profile; which hdfs"
+[tomtan@ip-172-31-27-219 ~]$ clush -g nn "sudo su -c '. $HOME/.bash_profile; which hdfs'"
 ip-172-31-16-27.ec2.internal: /opt/hadoop-3.2.1/bin/hdfs
 
 // 2. Formatting HDFS
-[tomtan@ip-172-31-27-219 ~]$ clush -g nn ". $HOME/.bash_profile; hdfs namenode -format -force"
+[tomtan@ip-172-31-27-219 ~]$ clush -g nn "sudo su -c '. $HOME/.bash_profile; hdfs namenode -format -force'"
 ip-172-31-16-27.ec2.internal: 2020-11-23 04:02:12,545 INFO namenode.NameNode: STARTUP_MSG:
 ip-172-31-16-27.ec2.internal: /************************************************************
 ip-172-31-16-27.ec2.internal: STARTUP_MSG: Starting NameNode
@@ -48,8 +44,8 @@ ip-172-31-16-27.ec2.internal: **************************************************
 Let's start running NameNode and DataNode processes.
 
 ```
-[tomtan@ip-172-31-27-219 ~]$ clush -g nn ". $HOME/.bash_profile; hdfs --daemon start namenode"
-[tomtan@ip-172-31-27-219 ~]$ clush -g dn ". $HOME/.bash_profile; hdfs --daemon start datanode"
+[tomtan@ip-172-31-27-219 ~]$ clush -g nn "sudo su -c '. $HOME/.bash_profile; hdfs --daemon start namenode'"
+[tomtan@ip-172-31-27-219 ~]$ clush -g dn "sudo su -c '. $HOME/.bash_profile; hdfs --daemon start datanode'"
 ip-172-31-29-73.ec2.internal: WARNING: /opt/hadoop-3.2.1/logs does not exist. Creating.
 ip-172-31-17-244.ec2.internal: WARNING: /opt/hadoop-3.2.1/logs does not exist. Creating.
 ```
@@ -57,18 +53,17 @@ ip-172-31-17-244.ec2.internal: WARNING: /opt/hadoop-3.2.1/logs does not exist. C
 You can check each process with `jps` command:
 
 ```
-[tomtan@ip-172-31-27-219 ~]$ clush -g nn "jps | grep -vi jps"
-ip-172-31-16-27.ec2.internal: 19425 NameNode
-[tomtan@ip-172-31-27-219 ~]$ clush -g dn "jps | grep -vi jps"
-ip-172-31-29-73.ec2.internal: 774 DataNode
-ip-172-31-17-244.ec2.internal: 997 DataNode
+[tomtan@ip-172-31-27-219 ~]$ clush -g nn "sudo jps | grep -vi jps"
+p-172-31-16-27.ec2.internal: 31468 NameNode
+[tomtan@ip-172-31-27-219 ~]$ clush -g dn "sudo jps | grep -vi jps"
+ip-172-31-17-244.ec2.internal: 14734 DataNode
+ip-172-31-29-73.ec2.internal: 7960 DataNode
 ```
 
 You can also check if the MasterNode has metadata files of HDFS.
 
 ```
-[tomtan@ip-172-31-27-219 ~]$ clush -g nn "ls -a /data/hadoop/hdfs/"
-[tomtan@ip-172-31-27-219 ~]$ clush -g nn "ls -a /data/hadoop/hdfs/nn/current"
+[tomtan@ip-172-31-27-219 ~]$ clush -g nn "sudo ls -a /data/hadoop/hdfs/nn/current"
 ip-172-31-16-27.ec2.internal: .
 ip-172-31-16-27.ec2.internal: ..
 ip-172-31-16-27.ec2.internal: edits_inprogress_0000000000000000001
@@ -82,168 +77,198 @@ ip-172-31-16-27.ec2.internal: VERSION
 Then, start running ResourceManager, NodeManager and JobHistory-server processes.
 
 ```
-[tomtan@ip-172-31-27-219 ~]$ clush -g nn ". $HOME/.bash_profile; yarn --daemon start resourcemanager"
-[tomtan@ip-172-31-27-219 ~]$ clush -g dn ". $HOME/.bash_profile; yarn --daemon start nodemanager"
-[tomtan@ip-172-31-27-219 ~]$ clush -g nn ". $HOME/.bash_profile; mapred --daemon start historyserver"
+[tomtan@ip-172-31-27-219 ~]$ clush -g nn "sudo su -c '. $HOME/.bash_profile; yarn --daemon start resourcemanager'"
+[tomtan@ip-172-31-27-219 ~]$ clush -g dn "sudo su -c '. $HOME/.bash_profile; yarn --daemon start nodemanager'"
+[tomtan@ip-172-31-27-219 ~]$ clush -g nn "sudo su -c '. $HOME/.bash_profile; mapred --daemon start historyserver'"
 ```
 
 You can check those processes:
 
 ```
-[tomtan@ip-172-31-27-219 ~]$ clush -g nn "jps | grep -vi jps"
-ip-172-31-16-27.ec2.internal: 20977 ResourceManager
-ip-172-31-16-27.ec2.internal: 21478 JobHistoryServer
-ip-172-31-16-27.ec2.internal: 20521 NameNode
+[tomtan@ip-172-31-27-219 ~]$ clush -g nn "sudo jps | grep -vi jps"
+ip-172-31-16-27.ec2.internal: 32358 ResourceManager
+ip-172-31-16-27.ec2.internal: 31468 NameNode
+ip-172-31-16-27.ec2.internal: 32669 JobHistoryServer
 
-[tomtan@ip-172-31-27-219 ~]$ clush -g dn "jps | grep -vi jps"
-ip-172-31-17-244.ec2.internal: 1737 DataNode
-ip-172-31-17-244.ec2.internal: 1902 NodeManager
-ip-172-31-29-73.ec2.internal: 1555 DataNode
-ip-172-31-29-73.ec2.internal: 1719 NodeManager
+[tomtan@ip-172-31-27-219 ~]$ clush -g dn "sudo jps | grep -vi jps"
+ip-172-31-17-244.ec2.internal: 14734 DataNode
+ip-172-31-17-244.ec2.internal: 14990 NodeManager
+ip-172-31-29-73.ec2.internal: 7960 DataNode
+ip-172-31-29-73.ec2.internal: 8174 NodeManager
 ```
 
-### 1-4. Checking the status of HDFS
+### 1-4. Checking the status of HDFS (on ClientNode)
 You can check the running status of HDFS as follows:
 
 ```
-[tomtan@ip-172-31-27-219 ~]$ clush -g nn ". $HOME/.bash_profile; hdfs dfsadmin -report"
-ip-172-31-16-27.ec2.internal: Configured Capacity: 17154662400 (15.98 GB)
-ip-172-31-16-27.ec2.internal: Present Capacity: 10961317888 (10.21 GB)
-ip-172-31-16-27.ec2.internal: DFS Remaining: 10961293312 (10.21 GB)
-ip-172-31-16-27.ec2.internal: DFS Used: 24576 (24 KB)
-ip-172-31-16-27.ec2.internal: DFS Used%: 0.00%
-ip-172-31-16-27.ec2.internal: Replicated Blocks:
-ip-172-31-16-27.ec2.internal: 	Under replicated blocks: 0
-ip-172-31-16-27.ec2.internal: 	Blocks with corrupt replicas: 0
-ip-172-31-16-27.ec2.internal: 	Missing blocks: 0
-ip-172-31-16-27.ec2.internal: 	Missing blocks (with replication factor 1): 0
-ip-172-31-16-27.ec2.internal: 	Low redundancy blocks with highest priority to recover: 0
-ip-172-31-16-27.ec2.internal: 	Pending deletion blocks: 0
-ip-172-31-16-27.ec2.internal: Erasure Coded Block Groups:
-ip-172-31-16-27.ec2.internal: 	Low redundancy block groups: 0
-ip-172-31-16-27.ec2.internal: 	Block groups with corrupt internal blocks: 0
-ip-172-31-16-27.ec2.internal: 	Missing block groups: 0
-ip-172-31-16-27.ec2.internal: 	Low redundancy blocks with highest priority to recover: 0
-ip-172-31-16-27.ec2.internal: 	Pending deletion blocks: 0
-ip-172-31-16-27.ec2.internal:
-ip-172-31-16-27.ec2.internal: -------------------------------------------------
-ip-172-31-16-27.ec2.internal: Live datanodes (2):
-ip-172-31-16-27.ec2.internal:
-ip-172-31-16-27.ec2.internal: Name: 172.31.17.244:9866 (ip-172-31-17-244.ec2.internal)
-ip-172-31-16-27.ec2.internal: Hostname: ip-172-31-17-244.ec2.internal
-ip-172-31-16-27.ec2.internal: Decommission Status : Normal
-ip-172-31-16-27.ec2.internal: Configured Capacity: 8577331200 (7.99 GB)
-ip-172-31-16-27.ec2.internal: DFS Used: 12288 (12 KB)
-ip-172-31-16-27.ec2.internal: Non DFS Used: 3096616960 (2.88 GB)
-ip-172-31-16-27.ec2.internal: DFS Remaining: 5480701952 (5.10 GB)
-ip-172-31-16-27.ec2.internal: DFS Used%: 0.00%
-ip-172-31-16-27.ec2.internal: DFS Remaining%: 63.90%
-ip-172-31-16-27.ec2.internal: Configured Cache Capacity: 0 (0 B)
-ip-172-31-16-27.ec2.internal: Cache Used: 0 (0 B)
-ip-172-31-16-27.ec2.internal: Cache Remaining: 0 (0 B)
-ip-172-31-16-27.ec2.internal: Cache Used%: 100.00%
-ip-172-31-16-27.ec2.internal: Cache Remaining%: 0.00%
-ip-172-31-16-27.ec2.internal: Xceivers: 1
-ip-172-31-16-27.ec2.internal: Last contact: Mon Nov 23 04:32:42 UTC 2020
-ip-172-31-16-27.ec2.internal: Last Block Report: Mon Nov 23 04:21:42 UTC 2020
-ip-172-31-16-27.ec2.internal: Num of Blocks: 0
-ip-172-31-16-27.ec2.internal:
-ip-172-31-16-27.ec2.internal:
-ip-172-31-16-27.ec2.internal: Name: 172.31.29.73:9866 (ip-172-31-29-73.ec2.internal)
-ip-172-31-16-27.ec2.internal: Hostname: ip-172-31-29-73.ec2.internal
-ip-172-31-16-27.ec2.internal: Decommission Status : Normal
-ip-172-31-16-27.ec2.internal: Configured Capacity: 8577331200 (7.99 GB)
-ip-172-31-16-27.ec2.internal: DFS Used: 12288 (12 KB)
-ip-172-31-16-27.ec2.internal: Non DFS Used: 3096727552 (2.88 GB)
-ip-172-31-16-27.ec2.internal: DFS Remaining: 5480591360 (5.10 GB)
-ip-172-31-16-27.ec2.internal: DFS Used%: 0.00%
-ip-172-31-16-27.ec2.internal: DFS Remaining%: 63.90%
-ip-172-31-16-27.ec2.internal: Configured Cache Capacity: 0 (0 B)
-ip-172-31-16-27.ec2.internal: Cache Used: 0 (0 B)
-ip-172-31-16-27.ec2.internal: Cache Remaining: 0 (0 B)
-ip-172-31-16-27.ec2.internal: Cache Used%: 100.00%
-ip-172-31-16-27.ec2.internal: Cache Remaining%: 0.00%
-ip-172-31-16-27.ec2.internal: Xceivers: 1
-ip-172-31-16-27.ec2.internal: Last contact: Mon Nov 23 04:32:42 UTC 2020
-ip-172-31-16-27.ec2.internal: Last Block Report: Mon Nov 23 04:21:42 UTC 2020
-ip-172-31-16-27.ec2.internal: Num of Blocks: 0
-ip-172-31-16-27.ec2.internal:
-ip-172-31-16-27.ec2.internal:
+[root@ip-172-31-27-219 ~]# hdfs dfsadmin -report
+Configured Capacity: 68681736192 (63.96 GB)
+Present Capacity: 68545429504 (63.84 GB)
+DFS Remaining: 68545421312 (63.84 GB)
+DFS Used: 8192 (8 KB)
+DFS Used%: 0.00%
+Replicated Blocks:
+	Under replicated blocks: 0
+	Blocks with corrupt replicas: 0
+	Missing blocks: 0
+	Missing blocks (with replication factor 1): 0
+	Low redundancy blocks with highest priority to recover: 0
+	Pending deletion blocks: 0
+Erasure Coded Block Groups:
+	Low redundancy block groups: 0
+	Block groups with corrupt internal blocks: 0
+	Missing block groups: 0
+	Low redundancy blocks with highest priority to recover: 0
+	Pending deletion blocks: 0
+
+-------------------------------------------------
+Live datanodes (2):
+
+Name: 172.31.17.244:9866 (ip-172-31-17-244.ec2.internal)
+Hostname: ip-172-31-17-244.ec2.internal
+Decommission Status : Normal
+Configured Capacity: 34340868096 (31.98 GB)
+DFS Used: 4096 (4 KB)
+Non DFS Used: 68153344 (65.00 MB)
+DFS Remaining: 34272710656 (31.92 GB)
+DFS Used%: 0.00%
+DFS Remaining%: 99.80%
+Configured Cache Capacity: 0 (0 B)
+Cache Used: 0 (0 B)
+Cache Remaining: 0 (0 B)
+Cache Used%: 100.00%
+Cache Remaining%: 0.00%
+Xceivers: 1
+Last contact: Sun Nov 29 01:35:58 UTC 2020
+Last Block Report: Sun Nov 29 01:27:22 UTC 2020
+Num of Blocks: 0
+
+
+Name: 172.31.29.73:9866 (ip-172-31-29-73.ec2.internal)
+Hostname: ip-172-31-29-73.ec2.internal
+Decommission Status : Normal
+Configured Capacity: 34340868096 (31.98 GB)
+DFS Used: 4096 (4 KB)
+Non DFS Used: 68153344 (65.00 MB)
+DFS Remaining: 34272710656 (31.92 GB)
+DFS Used%: 0.00%
+DFS Remaining%: 99.80%
+Configured Cache Capacity: 0 (0 B)
+Cache Used: 0 (0 B)
+Cache Remaining: 0 (0 B)
+Cache Used%: 100.00%
+Cache Remaining%: 0.00%
+Xceivers: 1
+Last contact: Sun Nov 29 01:35:58 UTC 2020
+Last Block Report: Sun Nov 29 01:27:22 UTC 2020
+Num of Blocks: 0
 ```
 
 And, you can check the permisson for `/tmp` on HDFS. This directory is used by YARN applications. To check this easily, you move to MasterNode.
 
 ```
-[tomtan@ip-172-31-16-27 ~]$ hdfs dfs -chmod -R 1777 /tmp
-[tomtan@ip-172-31-16-27 ~]$ hdfs dfs -ls /
+[root@ip-172-31-27-219 ~]# hdfs dfs -chmod -R 1777 /tmp
+[root@ip-172-31-27-219 ~]# hdfs dfs -ls /
 Found 1 items
-drwxrwxrwt   - tomtan supergroup          0 2020-11-23 04:29 /tmp
+drwxrwxrwt   - root supergroup          0 2020-11-29 01:29 /tmp
 ```
 
 Additionally, you can check the space of HDFS on MasterNode.
 
 ```
-[tomtan@ip-172-31-16-27 ~]$ hdfs dfs -df -h
+[root@ip-172-31-27-219 ~]# hdfs dfs -df -h
 Filesystem                                  Size  Used  Available  Use%
-hdfs://ip-172-31-16-27.ec2.internal:9000  16.0 G  24 K     10.2 G    0%
+hdfs://ip-172-31-16-27.ec2.internal:9000  64.0 G  16 K     63.8 G    0%
 ```
 
 Finally, let's test if you can copy a file on HDFS on MasterNode.
 
 ```
-[tomtan@ip-172-31-16-27 ~]$ dd if=/dev/zero of=~/file01 bs=1024k count=10
+[root@ip-172-31-27-219 ~]# dd if=/dev/zero of=~/file01 bs=1024k count=10
 10+0 records in
 10+0 records out
-10485760 bytes (10 MB) copied, 0.00461907 s, 2.3 GB/s
-[tomtan@ip-172-31-16-27 ~]$ hdfs dfs -mkdir /testdir1
-[tomtan@ip-172-31-16-27 ~]$ hdfs dfs -put ~/file01 /testdir1
-2020-11-23 04:42:21,824 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
-[tomtan@ip-172-31-16-27 ~]$ hdfs dfs -ls /testdir1
+10485760 bytes (10 MB) copied, 0.00449019 s, 2.3 GB/s
+
+[root@ip-172-31-27-219 ~]# hdfs dfs -mkdir /testdir1
+[root@ip-172-31-27-219 ~]# hdfs dfs -put ~/file01 /testdir1
+2020-11-29 01:40:52,955 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+[root@ip-172-31-27-219 ~]# hdfs dfs -ls /testdir1
 Found 1 items
--rw-r--r--   3 tomtan supergroup   10485760 2020-11-23 04:42 /testdir1/file01
+-rw-r--r--   3 root supergroup   10485760 2020-11-29 01:40 /testdir1/file01
 
 // Check if the file uses the HDFS space, compared with the previous result.
-[tomtan@ip-172-31-16-27 ~]$ hdfs dfs -df -h
+[root@ip-172-31-27-219 ~]# hdfs dfs -df -h
 Filesystem                                  Size    Used  Available  Use%
-hdfs://ip-172-31-16-27.ec2.internal:9000  16.0 G  20.2 M     10.2 G    0%
+hdfs://ip-172-31-16-27.ec2.internal:9000  64.0 G  20.2 M     63.8 G    0%
 ```
 
-### 1-5. Access from ClientNode
+Of course you can access HDFS from the MasterNode as follows:
 
 ```
-[tomtan@ip-172-31-27-219 ~]$ hdfs dfs -df -h
+[root@ip-172-31-16-27 ~]# source /home/tomtan/.bash_profile
+[root@ip-172-31-16-27 ~]# hdfs dfs -ls /
+Found 2 items
+drwxr-xr-x   - root supergroup          0 2020-11-29 01:40 /testdir1
+drwxrwxrwt   - root supergroup          0 2020-11-29 01:29 /tmp
+
+[root@ip-172-31-16-27 ~]# hdfs dfs -df -h
 Filesystem                                  Size    Used  Available  Use%
-hdfs://ip-172-31-16-27.ec2.internal:9000  16.0 G  20.2 M     10.2 G    0%
-
-[tomtan@ip-172-31-27-219 ~]$ hdfs dfs -put ~/file01 /user/tomtan-clientnode
-2020-11-23 04:58:41,944 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
-
-[tomtan@ip-172-31-27-219 ~]$ hdfs dfs -mkdir -p /user/tomtan-clientnode
-[tomtan@ip-172-31-27-219 ~]$ hdfs dfs -ls /user/tomtan-clientnode
-Found 1 items
--rw-r--r--   3 tomtan supergroup   10485760 2020-11-23 04:58 /user/tomtan-clientnode/file01
+hdfs://ip-172-31-16-27.ec2.internal:9000  64.0 G  20.2 M     63.8 G    0%
 ```
 
-#### From a new user
+#### Access from a new user
 If you create a new user, and you want to access to the cluster from the new user, you need to add the permission to the user. Specifically, you need to do as follows:
 
 ```
-$ hdfs dfs -mkdir /user/newuser
-$ hdfs dfs -chown newuser:supergroup /user/newuser
-$ hdfs dfs -chmod 700 /user/newuser
+[root@ip-172-31-27-219 ~]# hdfs dfs -mkdir -p /user/tomtan
+[root@ip-172-31-27-219 ~]# hdfs dfs -chown tomtan:supergroup /user/tomtan
+[root@ip-172-31-27-219 ~]# hdfs dfs -chmod 700 /user/tomtan
+
+[root@ip-172-31-27-219 ~]# hdfs dfs -ls /user/
+Found 1 items
+drwx------   - tomtan supergroup          0 2020-11-29 01:46 /user/tomtan
+```
+
+You can confirm that you can access to the directory and files at the directory.
+
+```
+[tomtan@ip-172-31-27-219 ~]$ dd if=/dev/zero of=~/tomtan01 bs=1024k count=10
+10+0 records in
+10+0 records out
+10485760 bytes (10 MB) copied, 0.00454551 s, 2.3 GB/s
+
+[tomtan@ip-172-31-27-219 ~]$ hdfs dfs -put tomtan01 /user/tomtan
+2020-11-29 01:51:14,767 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+
+[tomtan@ip-172-31-27-219 ~]$ hdfs dfs -ls /user/tomtan
+Found 1 items
+-rw-r--r--   3 tomtan supergroup   10485760 2020-11-29 01:51 /user/tomtan/tomtan01
+
+// However, fail to put the object on the other user's directory
+[root@ip-172-31-27-219 tomtan]# hdfs dfs -mkdir /user/root
+
+[tomtan@ip-172-31-27-219 ~]$ hdfs dfs -ls /user/
+Found 2 items
+drwxr-xr-x   - root   supergroup          0 2020-11-29 01:53 /user/root
+drwx------   - tomtan supergroup          0 2020-11-29 01:51 /user/tomtan
+
+[tomtan@ip-172-31-27-219 ~]$ hdfs dfs -put tomtan01 /user/root
+put: Permission denied: user=tomtan, access=WRITE, inode="/user/root":root:supergroup:drwxr-xr-x
 ```
 
 ## 2. Running a YARN application
-As a last step, we'll check whether a yarn application runs fine. Firstly we check the [HDFS safemode](https://hadoop.apache.org/docs/r3.2.1/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html#Safemode) as follows (If needed, you check if the NTP server works fine).
+We check whether a yarn application runs fine. Firstly we check the [HDFS safemode](https://hadoop.apache.org/docs/r3.2.1/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html#Safemode) as follows (If needed, you check if the NTP server works fine).
 
 ```
-[tomtan@ip-172-31-27-219 ~]$ hdfs dfsadmin -safemode get
+[root@ip-172-31-27-219 ~]# hdfs dfsadmin -safemode get
 Safe mode is OFF
 ```
 
-Then, let's run a yarn application; [Monte Carlo simulation](https://en.wikipedia.org/wiki/Monte_Carlo_method).
+Then, let's run a yarn application by the user `tomtan`; [Monte Carlo simulation](https://en.wikipedia.org/wiki/Monte_Carlo_method).
 
 ```
+[tomtan@ip-172-31-27-219 mapreduce]$ pwd
+/opt/hadoop-3.2.1/share/hadoop/mapreduce
 [tomtan@ip-172-31-27-219 mapreduce]$ hadoop jar hadoop-mapreduce-examples-3.2.1.jar
 An example program must be given as the first argument.
 Valid program names are:
@@ -271,23 +296,28 @@ Valid program names are:
   wordstandarddeviation: A map/reduce program that counts the standard deviation of the length of the words in the input files.
 
 // Run the pi example
-[tomtan@ip-172-31-27-219 mapreduce]$ hadoop jar hadoop-mapreduce-examples-3.2.1.jar pi 5 1000
-Number of Maps  = 5
-Samples per Map = 1000
+[tomtan@ip-172-31-27-219 mapreduce]$ hadoop jar hadoop-mapreduce-examples-3.2.1.jar pi 10 100
+Number of Maps  = 10
+Samples per Map = 100
 ...
-2020-11-23 07:01:00,992 INFO mapreduce.Job: Job job_1606114133340_0003 running in uber mode : false
-2020-11-23 07:01:00,993 INFO mapreduce.Job:  map 0% reduce 0%
-2020-11-23 07:01:05,030 INFO mapreduce.Job:  map 20% reduce 0%
-2020-11-23 07:01:06,035 INFO mapreduce.Job:  map 60% reduce 0%
-2020-11-23 07:01:08,044 INFO mapreduce.Job:  map 100% reduce 0%
-2020-11-23 07:01:10,051 INFO mapreduce.Job:  map 100% reduce 100%
+2020-11-29 01:58:29,977 INFO mapreduce.Job: Running job: job_1606613378226_0001
+2020-11-29 01:58:37,073 INFO mapreduce.Job: Job job_1606613378226_0001 running in uber mode : false
+2020-11-29 01:58:37,074 INFO mapreduce.Job:  map 0% reduce 0%
+2020-11-29 01:58:41,112 INFO mapreduce.Job:  map 10% reduce 0%
+2020-11-29 01:58:42,117 INFO mapreduce.Job:  map 30% reduce 0%
+2020-11-29 01:58:44,126 INFO mapreduce.Job:  map 40% reduce 0%
+2020-11-29 01:58:45,131 INFO mapreduce.Job:  map 60% reduce 0%
+2020-11-29 01:58:48,141 INFO mapreduce.Job:  map 80% reduce 0%
+2020-11-29 01:58:51,152 INFO mapreduce.Job:  map 100% reduce 0%
+2020-11-29 01:58:52,155 INFO mapreduce.Job:  map 100% reduce 100%
 ...
-2020-11-23 07:01:10,165 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
-Estimated value of Pi is 3.14160000000000000000
+2020-11-29 01:58:52,265 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+Estimated value of Pi is 3.14800000000000000000
 
 ```
 
 You've done the cluster configuration successfully! Using this cluster, we'll deploy yarn-based cluster such as Spark, Hive etc from the next chapter.
+
 
 ## 3. (Additional) Stopping the cluster
 When you stop the cluster, you follow the below steps.
@@ -299,12 +329,12 @@ When you stop the cluster, you follow the below steps.
 Speicifically, you run the following commands.
 
 ```
-$ clush -g nn ". ~/.bash_profile; hdfs --daemon stop namenode"
-$ clush -g dn ". ~/.bash_profile; hdfs --daemon stop datanode"
-$ clush -g dn ". ~/.bash_profile; yarn --daemon stopnodemanager"
-$ clush -g nn ". ~/.bash_profile; yarn --daemon stop resourcemanager"
-$ clush -g nn ". ~/.bash_profile; mapred --daemon stop historyserver"
-$ clush -g all jps // => Check whether there are the running processes
+$ clush -g nn "sudo su -c '. $HOME/.bash_profile; hdfs --daemon stop namenode'"
+$ clush -g dn "sudo su -c '. $HOME/.bash_profile; hdfs --daemon stop datanode'"
+$ clush -g dn "sudo su -c '. $HOME/.bash_profile; yarn --daemon stopnodemanager'"
+$ clush -g nn "sudo su -c '. $HOME/.bash_profile; yarn --daemon stop resourcemanager'"
+$ clush -g nn "sudo su -c '. $HOME/.bash_profile; mapred --daemon stop historyserver'"
+$ clush -g all sudo jps // => Check whether there are the running processes
 ```
 
 If you have a secondary NameNode, 
