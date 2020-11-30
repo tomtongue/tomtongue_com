@@ -172,7 +172,7 @@ Step2:
 	</property>
 	<property>
 		<name>yarn.resourcemanager.nodes.exclude-path</name>
-		<value>/opt/hadoop-3.2.1/etc/yarn.exclude</value>
+		<value>/opt/hadoop-3.2.1/etc/hadoop/yarn.exclude</value>
 	</property>
 </configuration>
 ```
