@@ -24,5 +24,8 @@ module.exports = {
       'building_clusters_journey/1_4-running-hadoop-cluster',
       'building_clusters_journey/1_5-managing-hadoop-cluster'
     ],
+    '2. Spark Cluster': [
+      'building_clusters_journey/2_1-building-spark-cluster',
+    ],
   }
 };
