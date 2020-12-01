@@ -13,9 +13,10 @@ In this chapter, we'll create a Spark cluster based on the cluster that we creat
 1. Building Spark cluster
     1. Installing Apache Spark
     2. Configuration
-    3. Runnning Spark
-    4. Running an test application on Spark on YARN cluster
-2. Runnning a Scala program
+    3. Runnning Spark processes
+2. Runnning Spark applications on YARN
+    1. Running Scala-Spark
+    2. Runnning PySpark
 3. SparkSQL
 4. Spark Streaming
 
@@ -185,7 +186,7 @@ Found 260 items
 ...
 ```
 
-## 3. Runnning Spark
+## 3. Runnning Spark processes
 We launch Spark processes, firstly launch the master, and then slave. Specifically, we run the folloinwing scripts under `$SPARK_HOME/sbin` directory.
 * `start-master.sh`
 * `start-slave.sh`
@@ -275,5 +276,3 @@ scala> rdd.collect
 And, you can see the following Spark web ui.
 
 ![](/docs/building_clusters_journey/2-hadoop_1.png)
-
-## 4. Running an test application on Spark on YARN cluster
