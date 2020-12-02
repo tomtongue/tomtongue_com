@@ -215,7 +215,7 @@ Found 1 items
 ```
 
 ### 3-2. Running Structured Streaming with Scala
-Here's the streaming application code. In this case, you just ru these code thorough `spark-shell` consol. The first code means getting the file schema with DataFrame `inferSchema` option. Using this schema, we process the data which is put on HDFS.
+Here's the streaming application code. In this case, you just run these code thorough `spark-shell` consol. The first code means getting the file schema with DataFrame `inferSchema` option. Using this schema, we process the data which is put on HDFS.
 
 ```scala
 val schema = spark.read.format("csv").
