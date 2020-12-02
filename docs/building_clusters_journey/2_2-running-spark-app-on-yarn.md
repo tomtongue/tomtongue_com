@@ -221,7 +221,7 @@ Here's the streaming application code. In this case, you just ru these code thor
 val schema = spark.read.format("csv").
 option("inferSchema", true).
 option("header", true).
-load("hdfs://ip-172-31-16-27.ec2.internal:9000//user/tomtan/streaming").schema
+load("hdfs://ip-172-31-16-27.ec2.internal:9000/user/tomtan/streaming").schema
 // > schema: org.apache.spark.sql.types.StructType = StructType(StructField(State,StringType,true), StructField(Color,StringType,true), StructField(Count,IntegerType,true))
 
 val csvStream = spark.readStream.
