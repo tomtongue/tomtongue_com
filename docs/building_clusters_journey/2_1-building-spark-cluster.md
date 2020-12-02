@@ -17,7 +17,7 @@ In this chapter, we'll create a Spark cluster based on the cluster that we creat
 2. Runnning Spark applications on YARN
     1. Running Scala-Spark
     2. Runnning PySpark
-    3. Running Spark Streaming
+    3. Running a Streaming application
 
 We skip the following Spark related libraries:
 * MLLib

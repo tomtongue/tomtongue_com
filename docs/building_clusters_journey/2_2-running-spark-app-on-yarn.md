@@ -4,10 +4,6 @@ title: '2-2. Running Spark applications on YARN'
 sidebar_label: '2-2. Running Spark applications on YARN'
 ---
 
-:::caution
-This page is still under construction. 
-:::
-
 In this section, we'll build and run Scala-Spark/PySpark applications using [LearningSparkV2/chapter2 at master · databricks/LearningSparkV2 · GitHub](https://github.com/databricks/LearningSparkV2/tree/master/chapter2). 
 
 ## 1. Running Scala-Spark
@@ -92,7 +88,7 @@ Finally, let's run your code via `spark-submit`!
 --deploy-mode cluster \
 --num-executors 1 \
 --executor-cores 2 \
-./target/scala-2.12/main-scala-chapter2_2.12-1.0.jar "hdfs://ip-172-31-16-27.ec2.internal:9000//user/tomtan/spark-mnm-count/mnm_dataset.csv"
+./target/scala-2.12/main-scala-chapter2_2.12-1.0.jar "hdfs://ip-172-31-16-27.ec2.internal:9000/user/tomtan/spark-mnm-count/mnm_dataset.csv"
 
 ...
 2020-12-02 02:38:54,327 INFO yarn.Client:
@@ -173,7 +169,7 @@ Let's run the `mnmcount.py` as follows.
 --deploy-mode cluster \
 --num-executors 1 \
 --executor-cores 2 \
-mnmcount.py "hdfs://ip-172-31-16-27.ec2.internal:9000//user/tomtan/spark-mnm-count/mnm_dataset.csv"
+mnmcount.py "hdfs://ip-172-31-16-27.ec2.internal:9000/user/tomtan/spark-mnm-count/mnm_dataset.csv"
 
 ...
 2020-12-02 02:58:44,730 INFO yarn.Client:
@@ -193,5 +189,86 @@ mnmcount.py "hdfs://ip-172-31-16-27.ec2.internal:9000//user/tomtan/spark-mnm-cou
 
 Then, you can get the same result.
 
+## 3. Running a Streaming application
+In this section, we'll create a streaming processing application with "Structured Streaming". Structured streaming is one of the component in Apache Spark. This component is built on tops of the SparkSQL abstraction as the following diagram. We don't see the details of each Spark components in this session. If you want to learn about streaming components, the following resources should be very helpful.
+* [Stream Processing with Apache Spark Book](https://www.oreilly.com/library/view/stream-processing-with/9781491944233/)
+* [Spark: The Definitive Guide Book](https://www.oreilly.com/library/view/spark-the-definitive/9781491912201/)
+* [Learning Spark, 2nd Edition Book](https://www.oreilly.com/library/view/learning-spark-2nd/9781492050032/)
 
-## 3. Running Spark Streaming
+![](/docs/building_clusters_journey/2-hadoop_2.png)
+
+### 3-1. Preparation
+We'll use csv FileSource for the streaming application in this section. The csv file source needs schema (you cannot use `inferSchem` option). Therefore, firstly we put the partial sample data which we used in the previous secion, on HDFS. In the streaming application, we'll extract the schema with DataFrame.
+
+```
+[tomtan@ip-172-31-27-219 ~]$ cat partial_mnm_ds.csv
+State,Color,Count
+TX,Red,20
+NV,Blue,66
+CO,Blue,79
+OR,Blue,71
+[tomtan@ip-172-31-27-219 ~]$ hdfs dfs -put partial_mnm_ds.csv /user/tomtan/streaming
+2020-12-02 20:28:46,501 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+[tomtan@ip-172-31-27-219 ~]$ hdfs dfs -ls /user/tomtan/streaming
+Found 1 items
+-rw-r--r--   3 tomtan supergroup         61 2020-12-02 20:28 /user/tomtan/streaming/partial_mnm_ds.csv
+```
+
+### 3-2. Running Structured Streaming with Scala
+Here's the streaming application code. In this case, you just ru these code thorough `spark-shell` consol. The first code means getting the file schema with DataFrame `inferSchema` option. Using this schema, we process the data which is put on HDFS.
+
+```scala
+val schema = spark.read.format("csv").
+option("inferSchema", true).
+option("header", true).
+load("hdfs://ip-172-31-16-27.ec2.internal:9000//user/tomtan/streaming").schema
+// > schema: org.apache.spark.sql.types.StructType = StructType(StructField(State,StringType,true), StructField(Color,StringType,true), StructField(Count,IntegerType,true))
+
+val csvStream = spark.readStream.
+format("csv").
+schema(schema).
+load("hdfs://ip-172-31-16-27.ec2.internal:9000/user/tomtan/streaming")
+// > csvStream: org.apache.spark.sql.DataFrame = [State: string, Color: string ... 1 more field]
+
+val caCountMnNDF = csvStream.select("*").
+where(col("State") === "CA").
+groupBy("State", "Color").
+sum("Count").
+orderBy(desc("sum(Count)"))
+// > caCountMnNDF: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [State: string, Color: string ... 1 more field]
+
+import org.apache.spark.sql.streaming.Trigger
+// > import org.apache.spark.sql.streaming.Trigger
+
+val streamingQuery = caCountMnNDF.writeStream.
+format("console").
+outputMode("complete").
+trigger(Trigger.ProcessingTime("10 seconds")).
+option("checkpointLocation", "hdfs://ip-172-31-16-27.ec2.internal:9000/user/tomtan/streaming-checkpoint/").
+start()
+// > streamingQuery: org.apache.spark.sql.streaming.StreamingQuery = org.apache.spark.sql.execution.streaming.StreamingQueryWrapper@181ae1b4
+
+streamingQuery.awaitTermination()
+```
+
+After running the above code, we put the `mnm_dataset.csv` on the `/user/tomtan/streaming` directory on HDFS. Then, the streaming application processes the data, and you can get the following result.
+
+```
+[tomtan@ip-172-31-27-219 data]$ hdfs dfs -put mnm_dataset.csv /user/tomtan/streaming/
+
+// Processing result
+-------------------------------------------
+Batch: 1
+-------------------------------------------
++-----+------+----------+
+|State| Color|sum(Count)|
++-----+------+----------+
+|   CA|Yellow|    100956|
+|   CA| Brown|     95762|
+|   CA| Green|     93505|
+|   CA|   Red|     91527|
+|   CA|Orange|     90311|
+|   CA|  Blue|     89123|
++-----+------+----------+
+
+```
