@@ -5,7 +5,7 @@ sidebar_label: '1-1. Setup Hadoop Environment'
 ---
 
 :::caution
-This document is still under construction. 
+This page is still under construction. 
 :::
 
 ## Condition

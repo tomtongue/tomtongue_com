@@ -5,7 +5,7 @@ sidebar_label: '1-2. Installing Apache Hadoop3'
 ---
 
 :::caution
-This document is still under construction. 
+This page is still under construction. 
 :::
 
 We'll see following steps in this section:

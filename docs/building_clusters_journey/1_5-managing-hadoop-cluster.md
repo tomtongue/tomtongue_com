@@ -5,7 +5,7 @@ sidebar_label: '1-5. Managing Hadoop Cluster'
 ---
 
 :::caution
-This document is still under construction. 
+This page is still under construction. 
 :::
 
 ## WorkerNode Comission/Decomission

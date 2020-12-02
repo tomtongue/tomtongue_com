@@ -6,7 +6,7 @@ sidebar_label: '1-3. Setup Hadoop Configuration files'
 
 
 :::caution
-This document is still under construction. 
+This page is still under construction. 
 :::
 
 ```
