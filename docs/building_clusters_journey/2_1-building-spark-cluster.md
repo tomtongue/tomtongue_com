@@ -5,7 +5,7 @@ sidebar_label: '2-1. Building Spark Cluster'
 ---
 
 :::caution
-This document is still under construction. 
+This page is still under construction. 
 :::
 
 In this chapter, we'll create a Spark cluster based on the cluster that we created in the previous chapter.  We'll look into "how we build a spark cluster and run spark applications on both of Spark on YARN and Spark on Standalone. Specifically, we'll see following topics:
@@ -17,8 +17,7 @@ In this chapter, we'll create a Spark cluster based on the cluster that we creat
 2. Runnning Spark applications on YARN
     1. Running Scala-Spark
     2. Runnning PySpark
-3. SparkSQL
-4. Spark Streaming
+    3. Running Spark Streaming
 
 We skip the following Spark related libraries:
 * MLLib

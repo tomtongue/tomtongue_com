@@ -18,14 +18,14 @@ This doc is about how we build "BigData" related clusters such as Hadoop, Spark,
 Note that we're using Apache licensed software for these projects except for Presto.
 
 ## Contents (& Progress)
-1. Hadoop 3 **<= Currently working from 6th of Nov. in 2020**
+1. Hadoop 3 **Under construction**
 2. Spark cluster
-    1. Spark on Standalone
-    2. Spark on Hadoop/YARN
-    3. Spark on Kubernetes
-3. Hive on Hadoop/YARN
-4. Presto
-5. Kafka cluster
+    1. Spark on Standalone **Under construction**
+    2. Spark on Hadoop/YARN **Under construction**
+    3. Spark on Kubernetes (Not yet)
+3. Hive on Hadoop/YARN (Not yet)
+4. Presto (Not yet)
+5. Kafka cluster (Not yet)
 
 
 ## Environment
@@ -37,4 +37,5 @@ Here's the detail which you need to prepare when you build a cluster:
 * `clush` command - version: `clush 1.8.3`
 
 ## Reference
-* https://book.impress.co.jp/books/1116101090
+* https://book.impress.co.jp/books/1116101090 (Partially referred)
+* https://spark.apache.org/docs/latest/index.html

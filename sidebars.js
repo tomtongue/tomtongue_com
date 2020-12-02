@@ -26,6 +26,7 @@ module.exports = {
     ],
     '2. Spark Cluster': [
       'building_clusters_journey/2_1-building-spark-cluster',
+      'building_clusters_journey/2_2-running-spark-app-on-yarn'
     ],
   }
 };
