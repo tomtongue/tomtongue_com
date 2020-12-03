@@ -69,6 +69,13 @@ module.exports = {
             items: [
               {label: 'GitHub - tomtongue', to: 'https://github.com/tomtongue'},
               {label: 'LinkedIn', to: 'https://www.linkedin.com/in/tomohiro-tanaka-bb186039/'},
+              {
+                html: `
+                  <a href="https://www.netlify.com" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
+                    <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify" />
+                  </a>
+                `,
+              },
             ],
           }
         ],

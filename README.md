@@ -2,10 +2,10 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/33f57cc0-096d-4d2f-b9f5-2104afa26ecf/deploy-status)](https://app.netlify.com/sites/tomtongue/deploys)
 
-*This website is based on [Docusaurus - v2.0.0-alpha.66](https://v2.docusaurus.io/versions).*
+*This website is based on [Docusaurus - v2.0.0-alpha.69](https://v2.docusaurus.io/versions).*
 
 ## Current Architecture
-This document is currently using [netlify](https://www.netlify.com/) for web-hosting.
+This site is currently using [netlify](https://www.netlify.com/) for web-hosting.
 
 ## Differences from the default Docusaurus
 Tomtongue.com basically follows the Docusaurus default, however has some updates as follows:
@@ -20,4 +20,5 @@ Tomtongue.com basically follows the Docusaurus default, however has some updates
 |:-:|:-:|
 | 2020-07-18 | 2.0.0-alpha.58 |
 | 2020-09-13 | 2.0.0-alpha.64 | 
-| 2020-11-03 | 2.0.0-alpha.66 | 
+| 2020-11-03 | 2.0.0-alpha.66 |
+| 2020-12-03 | 2.0.0-alpha.69 |

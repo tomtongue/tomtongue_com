@@ -56,3 +56,11 @@ h1.hero__title {
   font-weight: 650;
   color: white
 }
+
+p, ul, li {
+  font-size: 97%;
+}
+
+code {
+  font-size: 96%;
+}
