@@ -20,10 +20,10 @@ module.exports = {
     },
     onBrokenLinks: 'warn',
     themeConfig: {
-      hideableSidebar: true,
       prism: {
         additionalLanguages: ['java', 'scala', 'swift', 'rust', 'ruby', 'python'],
       },
+      hideableSidebar: true,
       navbar: {
         hideOnScroll: true,
         title: 'tomtongue.com',
