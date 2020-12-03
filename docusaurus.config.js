@@ -15,6 +15,9 @@ module.exports = {
     favicon: 'img/favicon.ico',
     organizationName: 'tomtan', // Usually your GitHub org/user name.
     projectName: 'tomtongue_com', // Usually your repo name.
+    customFields: {
+      description: 'Expanding tomtan\'s knowledge about Apache Spark, Apache Kafka and related projects, and loving Coffee!'
+    },
     onBrokenLinks: 'warn',
     themeConfig: {
       hideableSidebar: true,
@@ -68,6 +71,13 @@ module.exports = {
             items: [
               {label: 'GitHub - tomtongue', to: 'https://github.com/tomtongue'},
               {label: 'LinkedIn', to: 'https://www.linkedin.com/in/tomohiro-tanaka-bb186039/'},
+              {
+                html: `
+                  <a href="https://www.netlify.com" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
+                    <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify" />
+                  </a>
+                `,
+              },
             ],
           }
         ],
@@ -97,7 +107,7 @@ module.exports = {
           sitemap: {
             cacheTime: 100 * 1000, // 600 sec - cache purge period
             changefreq: 'weekly',
-            priority: 1,
+            priority: 0.8,
             trailingSlash: false,
           },
         },
