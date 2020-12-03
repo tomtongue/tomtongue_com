@@ -20,10 +20,12 @@ module.exports = {
     },
     onBrokenLinks: 'warn',
     themeConfig: {
-      prism: {
-        additionalLanguages: ['java', 'scala', 'swift', 'rust', 'ruby', 'python'],
-      },
       hideableSidebar: true,
+      prism: {
+        theme: require('prism-react-renderer/themes/github'),
+        darkTheme: require('prism-react-renderer/themes/dracula'),
+        additionalLanguages: ['java', 'scala', 'swift', 'rust', 'python']
+      },
       navbar: {
         hideOnScroll: true,
         title: 'tomtongue.com',
@@ -97,16 +99,10 @@ module.exports = {
           blog: {
             showReadingTime: true,
             editUrl:
-              'https://github.com/tomtongue/tomtongue_com/edit/master/website/blog/',
+              'https://github.com/tomtongue/tomtongue_com/tree/master/blog',
           },
           theme: {
             customCss: require.resolve('./src/css/custom.css'),
-          },
-          sitemap: {
-            cacheTime: 100 * 1000, // 600 sec - cache purge period
-            changefreq: 'weekly',
-            priority: 0.8,
-            trailingSlash: false,
           },
         },
       ],
