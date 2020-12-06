@@ -28,5 +28,9 @@ module.exports = {
       'building_clusters_journey/2_1-building-spark-cluster',
       'building_clusters_journey/2_2-running-spark-app-on-yarn'
     ],
+    '3. Hive on Hadoop 3 ': [
+      'building_clusters_journey/3_1-setup-hive',
+      'building_clusters_journey/3_2-running-hive'
+    ],
   }
 };
