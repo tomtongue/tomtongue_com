@@ -97,9 +97,13 @@ module.exports = {
               'https://github.com/tomtongue/tomtongue_com',
           },
           blog: {
+            blogTitle: 'tomtan blog posts',
+            blogDescription: 'For documenting deeply dived knowledge',
             showReadingTime: true,
             editUrl:
               'https://github.com/tomtongue/tomtongue_com/tree/master/blog',
+            postsPerPage: 7,
+            blogSidebarCount: 7,
           },
           theme: {
             customCss: require.resolve('./src/css/custom.css'),
