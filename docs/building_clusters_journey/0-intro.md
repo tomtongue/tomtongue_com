@@ -18,12 +18,11 @@ This doc is about how we build "BigData" related clusters such as Hadoop, Spark,
 Note that we're using Apache licensed software for these projects except for Presto.
 
 ## Contents (& Progress)
-1. Hadoop 3 **Under construction**
+1. Hadoop 3
 2. Spark cluster
-    1. Spark on Standalone **Under construction**
-    2. Spark on Hadoop/YARN **Under construction**
+    2. Spark on Hadoop/YARN (plus Spark on Standalone)
     3. Spark on Kubernetes (Not yet)
-3. Hive on Hadoop/YARN (Not yet)
+3. Hive on Hadoop/YARN
 4. Presto (Not yet)
 5. Kafka cluster (Not yet)
 
