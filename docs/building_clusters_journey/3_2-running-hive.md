@@ -51,7 +51,7 @@ default
 Time taken: 0.578 seconds, Fetched: 1 row(s)
 
 
-[tomtan@ip-172-31-27-219 ~]$ beeline -u jdbc://hive2
+[tomtan@ip-172-31-27-219 ~]$ beeline -u jdbc:hive2://
 0: jdbc:hive2://> show databases;
 OK
 +----------------+
