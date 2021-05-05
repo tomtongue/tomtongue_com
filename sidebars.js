@@ -8,11 +8,6 @@
  */
 
 module.exports = {
-  apache_arrow_internals: {
-    'What is Apache Arrow?': [
-      'apache_arrow_internals/0-intro'
-    ],
-  },
   building_cluster_journey: {
     'Building Clusters journey': [
       'building_clusters_journey/0-intro'

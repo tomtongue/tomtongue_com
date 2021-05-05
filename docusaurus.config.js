@@ -35,7 +35,10 @@ module.exports = {
         },
         items: [
           {to: 'docs/building_clusters_journey/0-intro', label: 'Building Clusters Journey', position: 'right'},
-          {to: 'blog', label: 'Blog', position: 'left'},
+          {
+            href: 'https://tomtana.com/', 
+            label: 'Blog', 
+            position: 'left'},
           {
             href: 'https://github.com/tomtongue/tomtongue_com',
             label: 'GitHub',
@@ -62,8 +65,7 @@ module.exports = {
           {
             title: 'Blog',
             items: [
-              {label: 'Blog posts', to: '/blog'},
-              {label: 'Tags', to: '/blog/tags'}
+              {label: 'Blog posts (tomtana.com)', to: 'https://tomtana.com/'},
             ],
           },
           {
