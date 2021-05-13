@@ -29,7 +29,7 @@ const features = [
     "Showing how we build clusters which are related to BigData projects such as Apache Hadoop/Spark/Kafka/Hive and Presto."
   ),
   registerContent(
-    'Tomohiro Tanaka (Tom)', 'https://www.linkedin.com/in/tomohiro-tanaka-bb186039/', '/img/tomtan_selfie.png',
+    'Tomohiro Tanaka (Tom)', 'https://tomtana.com/', '/img/tomtan_selfie.png',
     "Working as a cloud coffee engineer and having interests in BigData related projects. Just a Coffee Lover."
   ),
   registerContent(

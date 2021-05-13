@@ -8,13 +8,13 @@
  */
 
 module.exports = {
-    title: 'tomtongue.com',
-    tagline: '👨🏻‍💻Need More Caffein👩🏻‍💻',
-    url: 'https://tomtongue.com',
+    title: 'Be coffeeholic!☕️',
+    tagline: 'Let\'s explore the unknown!',
+    url: 'https://books.tomtana.com',
     baseUrl: '/',
     favicon: 'img/favicon.ico',
     organizationName: 'tomtan', // Usually your GitHub org/user name.
-    projectName: 'tomtongue_com', // Usually your repo name.
+    projectName: 'books.tomtana.com', // Usually your repo name.
     customFields: {
       description: 'Expanding tomtan\'s knowledge about Apache Spark, Apache Kafka and related projects, and loving Coffee!'
     },
@@ -28,7 +28,7 @@ module.exports = {
       },
       navbar: {
         hideOnScroll: true,
-        title: 'tomtongue.com',
+        title: 'Tomtan\'s Books',
         logo: {
           alt: 'tomtan',
           src: 'img/tomtan_selfie.png',
@@ -71,17 +71,11 @@ module.exports = {
           {
             title: 'About Me',
             items: [
+              {label: 'Tomohiro Tanaka - tomtana.com', to: 'https://tomtana.com/'},
               {label: 'GitHub - tomtongue', to: 'https://github.com/tomtongue'},
               {label: 'LinkedIn', to: 'https://www.linkedin.com/in/tomohiro-tanaka-bb186039/'},
-              {
-                html: `
-                  <a href="https://www.netlify.com" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
-                    <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify" />
-                  </a>
-                `,
-              },
             ],
-          }
+          },
         ],
         // Please do not remove the credits, help to publicize Docusaurus :)
         copyright: `Copyright © ${new Date().getFullYear()} tomtan. Built with Docusaurus.`,
